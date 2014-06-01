@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>独立世界</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#/tags">Tags</a></li>
+            <li><a href="/#/archive">Archive</a></li>
+            <li><a href="http://editor.yangjinkun.cn" target="_blank">Editor</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+####环境：ubuntu 12.04 LTS
+
+####（1）到[ffmepg官网](http://www.ffmpeg.org/download.html)下载最新版ffmpeg
+
+也可以用这个命令：
+```
+$git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
+```
+> **yasm**是汇编编译器，因为ffmpeg中为了提高效率用到了汇编指令，所以需要先安装。
+
+[下载Source .tar.gz(即yasm-1.2.0.tar.gz)](http://yasm.tortall.net/Download.html)
+```  
+$tar zxvf yasm-1.2.0.tar.gz
+$cd yasm-1.2.0
+$./configure
+$make
+$sudo make install
+```
+ 
+####（2）需要用到x264库
+```
+$sudo apt-get install libx264-dev
+```
+####（3）安装依赖库
+```
+$sudo apt-get install libfaac-dev
+$sudo apt-get install libmp3lame-dev
+$sudo apt-get install libtheora-dev
+$sudo apt-get install libvorbis-dev
+$sudo apt-get install libxvidcore-dev
+$sudo apt-get install libxext-dev
+$sudo apt-get install libxfixes-dev
+```
+ 
+####(4)配置ffmpeg，主要是打开x11grab
+```
+$./configure --enable-gpl --enable-version3 --enable-nonfree --enable-postproc  --enable-pthreads --enable-libfaac  --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-x11grab --enable-libvorbis
+```
+ 
+####（5）编译
+```
+$make
+
+```
+####（6）安装
+```
+$sudo make install
+```
+这样就OK！
+
+------------------------
+
+###ffmpeg使用
+
+`例如，录制屏幕：`
+```
+ $ffmpeg -f x11grab -s 640x480 -r 25 -i :0.0 ./out.mpg
+```
+ 
+`问题：ffmpeg编译后没有ffplay？`
+
+**主要原因是没有装SDL库。**
+
+安装SDL库（不安装将没有ffplay）（如果自己去下载SDL源码然后make install安装的库，编译ffmpeg可以产生ffplay，但是产生的ffplay播放视频没有声音,而且不能播音频）。以及其他的一些库。
+```
+$sudo apt-get install libsdl1.2-dev(比较大，10M左右)
+附加包：
+$sudo apt-get install libsdl-image1.2-dev
+$sudo apt-get install libsdl-mixer1.2-dev
+$sudo apt-get install libsdl-ttf2.0-dev
+$sudo apt-get install libsdl-gfx1.2-dev
+```
+安装完成之后，在目录**/usr/include**中，就会有个**SDL文件夹**，里面包含了所需要的头文件。
+
+####编译
+```
+$./configure --enable-gpl --enable-version3 --enable-nonfree --enable-postproc  --enable-pthreads --enable-libfaac  --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-x11grab --enable-libvorbis
+$make
+$sudo make install
+```
+安装成功！OK！
+
+####最后测试
+```
+$./ffplay hello.mpg
+```
+**大功告成了！**
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<h4 id="ubuntu1204lts">环境：ubuntu 12.04 LTS</h4>
+
+<h4 id="1ffmepghttpwwwffmpegorgdownloadhtmlffmpeg">（1）到<a href="http://www.ffmpeg.org/download.html">ffmepg官网</a>下载最新版ffmpeg</h4>
+
+<p>也可以用这个命令：</p>
+
+<pre><code>$git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
+</code></pre>
+
+<blockquote>
+  <p><strong>yasm</strong>是汇编编译器，因为ffmpeg中为了提高效率用到了汇编指令，所以需要先安装。</p>
+</blockquote>
+
+<p><a href="http://yasm.tortall.net/Download.html">下载Source .tar.gz(即yasm-1.2.0.tar.gz)</a></p>
+
+<pre><code class="  ">$tar zxvf yasm-1.2.0.tar.gz
+$cd yasm-1.2.0
+$./configure
+$make
+$sudo make install
+</code></pre>
+
+<h4 id="2x264">（2）需要用到x264库</h4>
+
+<pre><code>$sudo apt-get install libx264-dev
+</code></pre>
+
+<h4 id="3">（3）安装依赖库</h4>
+
+<pre><code>$sudo apt-get install libfaac-dev
+$sudo apt-get install libmp3lame-dev
+$sudo apt-get install libtheora-dev
+$sudo apt-get install libvorbis-dev
+$sudo apt-get install libxvidcore-dev
+$sudo apt-get install libxext-dev
+$sudo apt-get install libxfixes-dev
+</code></pre>
+
+<h4 id="4ffmpegx11grab">(4)配置ffmpeg，主要是打开x11grab</h4>
+
+<pre><code>$./configure --enable-gpl --enable-version3 --enable-nonfree --enable-postproc  --enable-pthreads --enable-libfaac  --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-x11grab --enable-libvorbis
+</code></pre>
+
+<h4 id="5">（5）编译</h4>
+
+<pre><code>$make
+</code></pre>
+
+<h4 id="6">（6）安装</h4>
+
+<pre><code>$sudo make install
+</code></pre>
+
+<p>这样就OK！</p>
+
+<hr>
+
+<h3 id="ffmpeg">ffmpeg使用</h3>
+
+<p><code>例如，录制屏幕：</code></p>
+
+<pre><code> $ffmpeg -f x11grab -s 640x480 -r 25 -i :0.0 ./out.mpg
+</code></pre>
+
+<p><code>问题：ffmpeg编译后没有ffplay？</code></p>
+
+<p><strong>主要原因是没有装SDL库。</strong></p>
+
+<p>安装SDL库（不安装将没有ffplay）（如果自己去下载SDL源码然后make install安装的库，编译ffmpeg可以产生ffplay，但是产生的ffplay播放视频没有声音,而且不能播音频）。以及其他的一些库。</p>
+
+<pre><code>$sudo apt-get install libsdl1.2-dev(比较大，10M左右)
+附加包：
+$sudo apt-get install libsdl-image1.2-dev
+$sudo apt-get install libsdl-mixer1.2-dev
+$sudo apt-get install libsdl-ttf2.0-dev
+$sudo apt-get install libsdl-gfx1.2-dev
+</code></pre>
+
+<p>安装完成之后，在目录<strong>/usr/include</strong>中，就会有个<strong>SDL文件夹</strong>，里面包含了所需要的头文件。</p>
+
+<h4 id="">编译</h4>
+
+<pre><code>$./configure --enable-gpl --enable-version3 --enable-nonfree --enable-postproc  --enable-pthreads --enable-libfaac  --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-x11grab --enable-libvorbis
+$make
+$sudo make install
+</code></pre>
+
+<p>安装成功！OK！</p>
+
+<h4 id="">最后测试</h4>
+
+<pre><code>$./ffplay hello.mpg
+</code></pre>
+
+<p><strong>大功告成了！</strong></p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by YJK, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "blog1.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = YJK;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
